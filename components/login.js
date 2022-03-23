@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ToastAndroid, Button ,Text,Image} from "react-native";
+import TouchID from 'react-native-touch-id';
 import {
     GoogleSignin,
     GoogleSigninButton,
@@ -50,6 +51,23 @@ import {
           console.log(error.message);
         }
       };
+      biometric = async () => {
+        TouchID.authenticate('Authenticate with fingerprint') // Show the Touch ID prompt
+        .then(success => {
+          console.log(success.message);
+          console.log("success");
+          // Touch ID authentication was successful!
+          // Handle the successs case now
+        })
+        .catch(error => {
+          console.log("error");
+          console.log(error.message);
+          // Touch ID Authentication failed (or there was an error)!
+          // Also triggered if the user cancels the Touch ID prompt
+          // On iOS and some Android versions, `error.message` will tell you what went wrong
+        });
+
+      };
       render() {
         return (
           <View style={styles.container}>
@@ -73,6 +91,13 @@ import {
                 <Button
                   onPress={this.signOut}
                   title="Use other account"
+                  color="#24A0ED"
+                  accessibilityLabel="Learn more about this primary"/>
+              </View>
+              <View style={{ width: 160, marginTop: 10 }}>
+                <Button
+                  onPress={this.biometric}
+                  title="Fingerprint"
                   color="#24A0ED"
                   accessibilityLabel="Learn more about this primary"/>
               </View>

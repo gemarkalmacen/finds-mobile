@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ToastAndroid, Button ,Text,Image} from "react-native";
+import TouchID from 'react-native-touch-id';
 import {
     GoogleSignin,
     GoogleSigninButton,
@@ -16,6 +17,9 @@ import {
         userGoogleInfo : {},
         loaded: false
       }}
+    static navigationOptions = {
+      title: 'Login',
+    };
     signIn = async () => {
         try {
           console.log("Processing");
@@ -25,8 +29,9 @@ import {
             userGoogleInfo : userInfo,
             loaded : true
           })
-          // after it loads it goes here?
-
+          console.log(this.state.userGoogleInfo);
+          console.log(this.state.userGoogleInfo.user.name)
+          console.log(this.state.userGoogleInfo.user.email)
         } catch (error) {
           if (error.code === statusCodes.SIGN_IN_CANCELLED) {
             console.log("e 1");
@@ -38,6 +43,33 @@ import {
             console.log(error.message);
           }
         }
+      };
+      signOut = async () => {
+        try {
+          console.log("Sign out");
+          await GoogleSignin.revokeAccess();
+          await GoogleSignin.signOut();
+          this.signIn();
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+      biometric = async () => {
+        TouchID.authenticate('Authenticate with fingerprint') // Show the Touch ID prompt
+        .then(success => {
+          console.log(success.message);
+          console.log("success");
+          // Touch ID authentication was successful!
+          // Handle the successs case now
+        })
+        .catch(error => {
+          console.log("error");
+          console.log(error.message);
+          // Touch ID Authentication failed (or there was an error)!
+          // Also triggered if the user cancels the Touch ID prompt
+          // On iOS and some Android versions, `error.message` will tell you what went wrong
+        });
+
       };
       render() {
         return (
@@ -58,6 +90,20 @@ import {
               />
                 </View>
               : <Text>Not SignedIn</Text> }
+              <View style={{ width: 160, marginTop: 10 }}>
+                <Button
+                  onPress={this.signOut}
+                  title="Use other account"
+                  color="#24A0ED"
+                  accessibilityLabel="Learn more about this primary"/>
+              </View>
+              <View style={{ width: 160, marginTop: 10 }}>
+                <Button
+                  onPress={this.biometric}
+                  title="Fingerprint"
+                  color="#24A0ED"
+                  accessibilityLabel="Learn more about this primary"/>
+              </View>
           </View>
         );
     }
@@ -68,6 +114,9 @@ const styles = StyleSheet.create({
       backgroundColor:'#000000',
       padding:15,
     },
+    buttons:{
+        width:20
+    }
   });
 export default Login;
 

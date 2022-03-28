@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.swmansion.gesturehandler.RNGestureHandlerPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.facebook.react.ReactInstanceManager;

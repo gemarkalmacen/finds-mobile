@@ -4,6 +4,10 @@ export const portfolio = {
     date: "December 1, 2022",
 };
 
+export const webCliendID = {
+    webID: "260611616348-3vcacvukntei9np6t218vu99v672js8u.apps.googleusercontent.com"
+};
+
 export const trendingCurrencies = [
     {
         id: 1,

@@ -10,7 +10,6 @@ const TevDetail = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text>TEV</Text>
-           
         </View>
     )
 }

@@ -1,36 +1,40 @@
 import React from 'react';
-import { CryptoDetail, Transaction } from "./screens";
+import { Transaction, TevDetail, Login } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
-
 import Tabs from "./navigation/tabs";
+
 
 const Stack = createStackNavigator();
 
 const App = () => {
-  React.useEffect(() =>{
+  React.useEffect(() => {
     SplashScreen.hide()
-  },[])
+  }, [])
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false
         }}
-        initialRouteName={'Home'}
+        initialRouteName={'Login'}
       >
         <Stack.Screen
           name="Home"
           component={Tabs}
         />
         <Stack.Screen
-          name="CryptoDetail"
-          component={CryptoDetail}
+          name="TevDetail"
+          component={TevDetail}
         />
         <Stack.Screen
           name="Transaction"
           component={Transaction}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ToastAndroid, Button, Text, Image } from "react-native";
 import TouchID from 'react-native-touch-id';
+import { Home } from "../screens"
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
 import { dummyData, COLORS, SIZES, FONTS, icons, images } from '../constants';
+import Log from "./Log";
 GoogleSignin.configure({
   webClientId: '260611616348-3vcacvukntei9np6t218vu99v672js8u.apps.googleusercontent.com',
   offlineAccess: true, // if you want to access Google API on behalf 
 });
+
 class Login extends Component {
   constructor(props) {
     super(props)
@@ -46,33 +49,6 @@ class Login extends Component {
       }
     }
   };
-  signOut = async () => {
-    try {
-      console.log("Sign out");
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-      this.signIn();
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  biometric = async () => {
-    TouchID.authenticate('Authenticate with fingerprint') // Show the Touch ID prompt
-      .then(success => {
-        console.log(success.message);
-        console.log("success");
-        // Touch ID authentication was successful!
-        // Handle the successs case now
-      })
-      .catch(error => {
-        console.log("error");
-        console.log(error.message);
-        // Touch ID Authentication failed (or there was an error)!
-        // Also triggered if the user cancels the Touch ID prompt
-        // On iOS and some Android versions, `error.message` will tell you what went wrong
-      });
-
-  };
   render() {
     return (
       <View style={styles.container}>
@@ -83,37 +59,20 @@ class Login extends Component {
           onPress={this.signIn}
         />
         {this.state.loaded ?
-          <View>
-            <Text>{this.state.userGoogleInfo.user.name}</Text>
-            <Text>{this.state.userGoogleInfo.user.email}</Text>
-            <Image
-              style={{ width: 100, height: 100 }}
-              source={{ uri: this.state.userGoogleInfo.user.photo }}
-            />
-          </View>
-          : <Text>Not SignedIn</Text>}
-        <View style={{ width: 160, marginTop: 10 }}>
-          <Button
-            onPress={this.signOut}
-            title="Use other account"
-            color="#24A0ED"
-            accessibilityLabel="Learn more about this primary" />
-        </View>
-        <View style={{ width: 160, marginTop: 10 }}>
-          <Button
-            onPress={this.biometric}
-            title="Fingerprint"
-            color="#24A0ED"
-            accessibilityLabel="Learn more about this primary" />
-        </View>
+          <Log />
+          : <Text>Not sign in</Text>}
       </View>
     );
   }
 }
+
+// function renderHeader({ navigation }) {
+//   navigation.navigate('Home');
+// }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
     padding: 15,
   },
   buttons: {

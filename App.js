@@ -1,5 +1,5 @@
 import React from 'react';
-import { Transaction, TevDetail, Login } from "./screens";
+import { Transaction, TevDetail, Log, Login } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
@@ -21,6 +21,10 @@ const App = () => {
         initialRouteName={'Login'}
       >
         <Stack.Screen
+          name="Login"
+          component={Login}
+        />
+        <Stack.Screen
           name="Home"
           component={Tabs}
         />
@@ -33,8 +37,8 @@ const App = () => {
           component={Transaction}
         />
         <Stack.Screen
-          name="Login"
-          component={Login}
+          name="Log"
+          component={Log}
         />
       </Stack.Navigator>
     </NavigationContainer>
